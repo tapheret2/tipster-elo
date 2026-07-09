@@ -27,7 +27,12 @@ class EloTable:
         self.games[tipster] = self.games.get(tipster, 0) + 1
         return r2
 
-    def leaderboard(self) -> list[tuple[str, float, int]]:
+    def reset(self) -> None:
+    """Clear all ratings and game counts."""
+    self.ratings.clear()
+    self.games.clear()
+
+def leaderboard(self) -> list[tuple[str, float, int]]:
         rows = [(n, self.ratings[n], self.games.get(n, 0)) for n in self.ratings]
         rows.sort(key=lambda x: x[1], reverse=True)
         return rows
