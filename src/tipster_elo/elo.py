@@ -36,6 +36,10 @@ def count_rated(self) -> int:
     """Number of tipsters with a rating."""
     return len(self.ratings)
 
+def snapshot(self) -> dict[str, float]:
+    """Return a copy of current ratings."""
+    return dict(self.ratings)
+
 def leaderboard(self) -> list[tuple[str, float, int]]:
         rows = [(n, self.ratings[n], self.games.get(n, 0)) for n in self.ratings]
         rows.sort(key=lambda x: x[1], reverse=True)
