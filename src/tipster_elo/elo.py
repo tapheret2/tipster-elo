@@ -28,25 +28,31 @@ class EloTable:
         return r2
 
     def reset(self) -> None:
-    """Clear all ratings and game counts."""
-    self.ratings.clear()
-    self.games.clear()
+        """Clear all ratings and game counts."""
+        self.ratings.clear()
+        self.games.clear()
 
-def count_rated(self) -> int:
-    """Number of tipsters with a rating."""
-    return len(self.ratings)
+    def count_rated(self) -> int:
+        """Number of tipsters with a rating."""
+        return len(self.ratings)
 
-def snapshot(self) -> dict[str, float]:
-    """Return a copy of current ratings."""
-    return dict(self.ratings)
+    def snapshot(self) -> dict[str, float]:
+        """Return a copy of current ratings."""
+        return dict(self.ratings)
 
-def leaderboard(self) -> list[tuple[str, float, int]]:
+    def leaderboard(self) -> list[tuple[str, float, int]]:
         rows = [(n, self.ratings[n], self.games.get(n, 0)) for n in self.ratings]
         rows.sort(key=lambda x: x[1], reverse=True)
         return rows
 
+    def delta(self, tipster: str, other: str) -> float:
+        """Rating difference tipster - other (uses base for unknowns)."""
+        return self.get(tipster) - self.get(other)
 
-def rate_sequence(results: list[tuple[str, bool]], k: float = 20.0, base: float = 1500.0) -> EloTable:
+
+def rate_sequence(
+    results: list[tuple[str, bool]], k: float = 20.0, base: float = 1500.0
+) -> EloTable:
     table = EloTable(base=base, k=k)
     for name, won in results:
         table.update(name, won)
