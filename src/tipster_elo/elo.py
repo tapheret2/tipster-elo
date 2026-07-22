@@ -57,3 +57,11 @@ def rate_sequence(
     for name, won in results:
         table.update(name, won)
     return table
+
+def expected_score(rating_a: float, rating_b: float) -> float:
+    """Standard Elo expected score for A vs B."""
+    return 1.0 / (1.0 + 10 ** ((rating_b - rating_a) / 400.0))
+
+
+def update_rating(rating: float, expected: float, actual: float, k: float = 20.0) -> float:
+    return rating + k * (actual - expected)
