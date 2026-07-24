@@ -65,3 +65,12 @@ def expected_score(rating_a: float, rating_b: float) -> float:
 
 def update_rating(rating: float, expected: float, actual: float, k: float = 20.0) -> float:
     return rating + k * (actual - expected)
+
+
+def elo_change(rating: float, opp: float, score: float, k: float = 32.0) -> float:
+    exp = expected_score(rating, opp)
+    return k * (score - exp)
+
+
+def clamp_rating(rating: float, lo: float = 100.0, hi: float = 3000.0) -> float:
+    return max(lo, min(hi, rating))
